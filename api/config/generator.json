@@ -43,36 +43,28 @@
     "openai": {
       "display_name": "LLM 橋接器 (本機代理)",
       "description": "本機 LLM 代理，自動路由：claude-* → Anthropic 直連（OpenClaw 同款），其他 → GitHub Copilot",
-      "default_model": "gemini-3.1-pro-preview",
+      "default_model": "claude-sonnet-4.6",
       "supportsCustomModel": true,
       "models": {
+        "claude-sonnet-4.6": {
+          "temperature": 0.7,
+          "_backend": "github-copilot"
+        },
+        "claude-opus-4.6": {
+          "temperature": 0.7,
+          "_backend": "github-copilot"
+        },
+        "claude-haiku-4.5": {
+          "temperature": 0.7,
+          "_backend": "github-copilot"
+        },
         "gemini-3.1-pro-preview": {
-          "temperature": 0.7,
-          "_backend": "github-copilot"
-        },
-        "gemini-2.5-pro": {
-          "temperature": 0.7,
-          "_backend": "github-copilot"
-        },
-        "gemini-3-flash-preview": {
           "temperature": 0.7,
           "_backend": "github-copilot"
         },
         "gpt-5": {
           "temperature": 0.7,
           "_backend": "github-copilot"
-        },
-        "claude-sonnet-4-6": {
-          "temperature": 0.7,
-          "_backend": "anthropic"
-        },
-        "claude-opus-4-6": {
-          "temperature": 0.7,
-          "_backend": "anthropic"
-        },
-        "claude-haiku-4-5-20251001": {
-          "temperature": 0.7,
-          "_backend": "anthropic"
         }
       }
     },
