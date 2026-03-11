@@ -16,6 +16,8 @@ from api.config import (
     OPENAI_API_KEY,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
+    WIKI_AUTH_MODE,
+    WIKI_AUTH_CODE,
 )
 from api.data_pipeline import count_tokens, get_file_content
 from api.bedrock_client import BedrockClient
@@ -59,6 +61,7 @@ class ChatCompletionRequest(BaseModel):
     excluded_files: Optional[str] = Field(None, description="Comma-separated list of file patterns to exclude from processing")
     included_dirs: Optional[str] = Field(None, description="Comma-separated list of directories to include exclusively")
     included_files: Optional[str] = Field(None, description="Comma-separated list of file patterns to include exclusively")
+    authorization_code: Optional[str] = Field(None, description="Authorization code for generating wiki")
 
 async def handle_websocket_chat(websocket: WebSocket):
     """
@@ -71,6 +74,14 @@ async def handle_websocket_chat(websocket: WebSocket):
         # Receive and parse the request data
         request_data = await websocket.receive_json()
         request = ChatCompletionRequest(**request_data)
+
+        # Check authorization code if auth mode is enabled
+        if WIKI_AUTH_MODE:
+            if not request.authorization_code or request.authorization_code != WIKI_AUTH_CODE:
+                logger.warning("Unauthorized WebSocket access attempt")
+                await websocket.send_text("Error: Unauthorized. Invalid authorization code.")
+                await websocket.close(code=1008)
+                return
 
         # Check if request contains very large input
         input_too_large = False

@@ -106,10 +106,15 @@ const addTokensToRequestBody = (
   excludedDirs?: string,
   excludedFiles?: string,
   includedDirs?: string,
-  includedFiles?: string
+  includedFiles?: string,
+  authCode?: string
 ): void => {
   if (token !== '') {
     requestBody.token = token;
+  }
+
+  if (authCode) {
+    requestBody.authorization_code = authCode;
   }
 
   // Add provider-based model selection parameters
@@ -357,6 +362,14 @@ export default function RepoWikiPage() {
         }
         const data = await response.json();
         setAuthRequired(data.auth_required);
+
+        // Auto-fill authCode from sessionStorage if available
+        if (data.auth_required) {
+          const storedCode = sessionStorage.getItem('deepwiki_auth_code');
+          if (storedCode) {
+            setAuthCode(storedCode);
+          }
+        }
       } catch (err) {
         console.error("Failed to fetch auth status:", err);
         // Assuming auth is required if fetch fails to avoid blocking UI for safety
@@ -537,7 +550,7 @@ Remember:
         };
 
         // Add tokens if available
-        addTokensToRequestBody(requestBody, currentToken, effectiveRepoInfo.type, selectedProviderState, selectedModelState, isCustomSelectedModelState, customSelectedModelState, language, modelExcludedDirs, modelExcludedFiles, modelIncludedDirs, modelIncludedFiles);
+        addTokensToRequestBody(requestBody, currentToken, effectiveRepoInfo.type, selectedProviderState, selectedModelState, isCustomSelectedModelState, customSelectedModelState, language, modelExcludedDirs, modelExcludedFiles, modelIncludedDirs, modelIncludedFiles, authCode);
 
         // Use WebSocket for communication
         let content = '';
@@ -834,7 +847,7 @@ IMPORTANT:
       };
 
       // Add tokens if available
-      addTokensToRequestBody(requestBody, currentToken, effectiveRepoInfo.type, selectedProviderState, selectedModelState, isCustomSelectedModelState, customSelectedModelState, language, modelExcludedDirs, modelExcludedFiles, modelIncludedDirs, modelIncludedFiles);
+      addTokensToRequestBody(requestBody, currentToken, effectiveRepoInfo.type, selectedProviderState, selectedModelState, isCustomSelectedModelState, customSelectedModelState, language, modelExcludedDirs, modelExcludedFiles, modelIncludedDirs, modelIncludedFiles, authCode);
 
       // Use WebSocket for communication
       let responseText = '';

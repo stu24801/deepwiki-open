@@ -148,6 +148,11 @@ from api.config import configs, WIKI_AUTH_MODE, WIKI_AUTH_CODE
 
 @app.get("/lang/config")
 async def get_lang_config():
+    """
+    Get the language configuration.
+    This endpoint is intentionally public and bypasses WIKI_AUTH_MODE
+    so the frontend can render the initial UI and password prompt.
+    """
     return configs["lang_config"]
 
 @app.get("/auth/status")

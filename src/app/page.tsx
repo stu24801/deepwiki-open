@@ -12,6 +12,7 @@ import { extractUrlPath, extractUrlDomain } from '@/utils/urlDecoder';
 import { useProcessedProjects } from '@/hooks/useProcessedProjects';
 
 import { useLanguage } from '@/contexts/LanguageContext';
+import LoginPage from '@/components/LoginPage';
 
 // Define the demo mermaid charts outside the component
 const DEMO_FLOW_CHART = `graph TD
@@ -144,6 +145,7 @@ export default function Home() {
   const [authRequired, setAuthRequired] = useState<boolean>(false);
   const [authCode, setAuthCode] = useState<string>('');
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   // Sync the language context with the selectedLanguage state
   useEffect(() => {
@@ -161,6 +163,26 @@ export default function Home() {
         }
         const data = await response.json();
         setAuthRequired(data.auth_required);
+
+        // Check if already authenticated via sessionStorage
+        if (data.auth_required) {
+          const storedCode = sessionStorage.getItem('deepwiki_auth_code');
+          if (storedCode) {
+            // Validate stored code
+            const validateRes = await fetch('/api/auth/validate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ code: storedCode }),
+            });
+            const validateData = await validateRes.json();
+            if (validateData.success) {
+              setAuthCode(storedCode);
+              setIsAuthenticated(true);
+            }
+          }
+        } else {
+          setIsAuthenticated(true);
+        }
       } catch (err) {
         console.error("Failed to fetch auth status:", err);
         // Assuming auth is required if fetch fails to avoid blocking UI for safety
@@ -172,6 +194,11 @@ export default function Home() {
 
     fetchAuthStatus();
   }, []);
+
+  const handleLoginSuccess = (code: string) => {
+    setAuthCode(code);
+    setIsAuthenticated(true);
+  };
 
   // Parse repository URL/input and extract owner and repo
   const parseRepositoryInput = (input: string): {
@@ -389,6 +416,23 @@ export default function Home() {
 
     // The isSubmitting state will be reset when the component unmounts during navigation
   };
+
+  // Show loading while checking auth status
+  if (isAuthLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-gray-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login page if auth is required and not yet authenticated
+  if (authRequired && !isAuthenticated) {
+    return <LoginPage onLoginSuccess={handleLoginSuccess} />;
+  }
 
   return (
     <div className="h-screen paper-texture p-4 md:p-8 flex flex-col">
