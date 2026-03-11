@@ -41,6 +41,8 @@
       }
     },
     "openai": {
+      "display_name": "LLM 橋接器 (GitHub Copilot)",
+      "description": "本機 LLM 代理，透過 GitHub Copilot 路由，支援 Gemini / GPT / Claude 系列模型",
       "default_model": "gemini-3.1-pro-preview",
       "supportsCustomModel": true,
       "models": {

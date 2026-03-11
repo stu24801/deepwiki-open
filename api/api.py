@@ -196,10 +196,12 @@ async def get_model_config():
                 models.append(Model(id=model_id, name=model_id))
 
             # Add provider with its models
+            # Use display_name if available, otherwise capitalize the provider_id
+            display_name = provider_config.get("display_name", f"{provider_id.capitalize()}")
             providers.append(
                 Provider(
                     id=provider_id,
-                    name=f"{provider_id.capitalize()}",
+                    name=display_name,
                     supportsCustomModel=provider_config.get("supportsCustomModel", False),
                     models=models
                 )
