@@ -41,25 +41,38 @@
       }
     },
     "openai": {
-      "display_name": "LLM 橋接器 (GitHub Copilot)",
-      "description": "本機 LLM 代理，透過 GitHub Copilot 路由，支援 Gemini / GPT / Claude 系列模型",
+      "display_name": "LLM 橋接器 (本機代理)",
+      "description": "本機 LLM 代理，自動路由：claude-* → Anthropic 直連（OpenClaw 同款），其他 → GitHub Copilot",
       "default_model": "gemini-3.1-pro-preview",
       "supportsCustomModel": true,
       "models": {
         "gemini-3.1-pro-preview": {
-          "temperature": 0.7
+          "temperature": 0.7,
+          "_backend": "github-copilot"
         },
         "gemini-2.5-pro": {
-          "temperature": 0.7
+          "temperature": 0.7,
+          "_backend": "github-copilot"
         },
         "gemini-3-flash-preview": {
-          "temperature": 0.7
+          "temperature": 0.7,
+          "_backend": "github-copilot"
         },
         "gpt-5": {
-          "temperature": 0.7
+          "temperature": 0.7,
+          "_backend": "github-copilot"
         },
-        "claude-sonnet-4-5": {
-          "temperature": 0.7
+        "claude-sonnet-4-6": {
+          "temperature": 0.7,
+          "_backend": "anthropic"
+        },
+        "claude-3-7-sonnet-latest": {
+          "temperature": 0.7,
+          "_backend": "anthropic"
+        },
+        "claude-3-5-haiku-latest": {
+          "temperature": 0.7,
+          "_backend": "anthropic"
         }
       }
     },
