@@ -556,10 +556,9 @@ Remember:
         let content = '';
 
         try {
-          // Create WebSocket URL from the server base URL
-          const serverBaseUrl = process.env.SERVER_BASE_URL || 'http://localhost:8001';
-          const wsBaseUrl = serverBaseUrl.replace(/^http/, 'ws')? serverBaseUrl.replace(/^https/, 'wss'): serverBaseUrl.replace(/^http/, 'ws');
-          const wsUrl = `${wsBaseUrl}/ws/chat`;
+          // Create WebSocket URL from the browser's current location (not server env)
+          const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+          const wsUrl = `${wsProtocol}//${window.location.host}/ws/chat`;
 
           // Create a new WebSocket connection
           const ws = new WebSocket(wsUrl);
@@ -853,10 +852,9 @@ IMPORTANT:
       let responseText = '';
 
       try {
-        // Create WebSocket URL from the server base URL
-        const serverBaseUrl = process.env.SERVER_BASE_URL || 'http://localhost:8001';
-        const wsBaseUrl = serverBaseUrl.replace(/^http/, 'ws')? serverBaseUrl.replace(/^https/, 'wss'): serverBaseUrl.replace(/^http/, 'ws');
-        const wsUrl = `${wsBaseUrl}/ws/chat`;
+        // Create WebSocket URL from the browser's current location (not server env)
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}/ws/chat`;
 
         // Create a new WebSocket connection
         const ws = new WebSocket(wsUrl);
