@@ -168,7 +168,7 @@ export default function Home() {
 
         // Check if already authenticated via sessionStorage
         if (data.auth_required) {
-          const storedCode = sessionStorage.getItem('deepwiki_auth_code');
+          const storedCode = localStorage.getItem('deepwiki_auth_code');
           if (storedCode) {
             // Validate stored code
             const validateRes = await fetch('/api/auth/validate', {

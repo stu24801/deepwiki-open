@@ -28,7 +28,7 @@ export default function LoginPage({ onLoginSuccess }: LoginPageProps) {
       });
       const data = await res.json();
       if (data.success) {
-        sessionStorage.setItem('deepwiki_auth_code', code);
+        localStorage.setItem('deepwiki_auth_code', code);
         onLoginSuccess(code);
       } else {
         setError('Incorrect access code. Please try again.');

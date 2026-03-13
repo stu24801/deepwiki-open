@@ -365,7 +365,7 @@ export default function RepoWikiPage() {
 
         // Auto-fill authCode from sessionStorage if available
         if (data.auth_required) {
-          const storedCode = sessionStorage.getItem('deepwiki_auth_code');
+          const storedCode = localStorage.getItem('deepwiki_auth_code');
           if (storedCode) {
             setAuthCode(storedCode);
           }
