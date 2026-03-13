@@ -282,7 +282,13 @@ export default function RepoWikiPage() {
 
   // Authentication state
   const [authRequired, setAuthRequired] = useState<boolean>(false);
-  const [authCode, setAuthCode] = useState<string>('');
+  // Init authCode from URL param first (passed from home page), fallback to localStorage
+  const [authCode, setAuthCode] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return new URLSearchParams(window.location.search).get('auth_code') || localStorage.getItem('deepwiki_auth_code') || '';
+    }
+    return '';
+  });
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
 
   // Default branch state

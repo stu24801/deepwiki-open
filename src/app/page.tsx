@@ -411,6 +411,11 @@ export default function Home() {
     // Add comprehensive parameter
     params.append('comprehensive', isComprehensiveView.toString());
 
+    // Pass auth code via URL so the wiki page doesn't need to rely on storage
+    if (authCode) {
+      params.append('auth_code', authCode);
+    }
+
     const queryString = params.toString() ? `?${params.toString()}` : '';
 
     // Navigate to the dynamic route
