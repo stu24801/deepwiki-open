@@ -91,7 +91,9 @@ export default function Home() {
           setSelectedLanguage(config.selectedLanguage || language);
           setIsComprehensiveView(config.isComprehensiveView === undefined ? true : config.isComprehensiveView);
           setProvider(config.provider || '');
-          setModel(config.model || '');
+          // Normalize legacy hyphen-separated model names to dot notation (e.g. claude-sonnet-4-6 → claude-sonnet-4.6)
+          const normalizedModel = (config.model || '').replace(/claude-(\w+)-(\d+)-(\d+)$/, 'claude-$1-$2.$3');
+          setModel(normalizedModel);
           setIsCustomModel(config.isCustomModel || false);
           setCustomModel(config.customModel || '');
           setSelectedPlatform(config.selectedPlatform || 'github');
