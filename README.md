@@ -48,7 +48,7 @@ cd deepwiki-open
 
 # Create a .env file with your API keys
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 # Optional: Use Google AI embeddings instead of OpenAI (recommended if using Google models)
 echo "DEEPWIKI_EMBEDDER_TYPE=google" >> .env
 # Optional: Add OpenRouter API key if you want to use OpenRouter models
@@ -78,7 +78,7 @@ Create a `.env` file in the project root with these keys:
 
 ```
 GOOGLE_API_KEY=your_google_api_key
-OPENAI_API_KEY=your_openai_api_key
+LLM_PROXY_TOKEN=your_openai_api_key
 # Optional: Use Google AI embeddings (recommended if using Google models)
 DEEPWIKI_EMBEDDER_TYPE=google
 # Optional: Add this if you want to use OpenRouter models
@@ -214,7 +214,7 @@ Each provider requires its corresponding API key environment variables:
 ```
 # API Keys
 GOOGLE_API_KEY=your_google_api_key        # Required for Google Gemini models
-OPENAI_API_KEY=your_openai_api_key        # Required for OpenAI models
+LLM_PROXY_TOKEN=your_openai_api_key        # Required for OpenAI models
 OPENROUTER_API_KEY=your_openrouter_api_key # Required for OpenRouter models
 AZURE_OPENAI_API_KEY=your_azure_openai_api_key  #Required for Azure OpenAI models
 AZURE_OPENAI_ENDPOINT=your_azure_openai_endpoint  #Required for Azure OpenAI models
@@ -277,7 +277,7 @@ If you want to use embedding models compatible with the OpenAI API (such as Alib
 1. Replace the contents of `api/config/embedder.json` with those from `api/config/embedder_openai_compatible.json`.
 2. In your project root `.env` file, set the relevant environment variables, for example:
    ```
-   OPENAI_API_KEY=your_api_key
+   LLM_PROXY_TOKEN=your_api_key
    OPENAI_BASE_URL=your_openai_compatible_endpoint
    ```
 3. The program will automatically substitute placeholders in embedder.json with the values from your environment variables.
@@ -339,7 +339,7 @@ docker-compose up
 
 | Type | Description | API Key Required | Notes |
 |------|-------------|------------------|-------|
-| `openai` | OpenAI embeddings (default) | `OPENAI_API_KEY` | Uses `text-embedding-3-small` model |
+| `openai` | OpenAI embeddings (default) | `LLM_PROXY_TOKEN` | Uses `text-embedding-3-small` model |
 | `google` | Google AI embeddings | `GOOGLE_API_KEY` | Uses `text-embedding-004` model |
 | `ollama` | Local Ollama embeddings | None | Requires local Ollama installation |
 
@@ -410,7 +410,7 @@ docker-compose up
 | Variable             | Description                                                  | Required | Note                                                                                                     |
 |----------------------|--------------------------------------------------------------|----------|----------------------------------------------------------------------------------------------------------|
 | `GOOGLE_API_KEY`     | Google Gemini API key for AI generation and embeddings      | No | Required for Google Gemini models and Google AI embeddings                                               
-| `OPENAI_API_KEY`     | OpenAI API key for embeddings and models                     | Conditional | Required if using OpenAI embeddings or models                                                            |
+| `LLM_PROXY_TOKEN`     | OpenAI API key for embeddings and models                     | Conditional | Required if using OpenAI embeddings or models                                                            |
 | `OPENROUTER_API_KEY` | OpenRouter API key for alternative models                    | No | Required only if you want to use OpenRouter models                                                       |
 | `AWS_ACCESS_KEY_ID`  | AWS access key ID for Bedrock                                 | No | Required for Bedrock if not using instance/role-based credentials                                        |
 | `AWS_SECRET_ACCESS_KEY` | AWS secret access key for Bedrock                          | No | Required for Bedrock if not using instance/role-based credentials                                        |
@@ -428,7 +428,7 @@ docker-compose up
 | `DEEPWIKI_AUTH_CODE` | The secret code required for wiki generation when `DEEPWIKI_AUTH_MODE` is enabled. | No | Only used if `DEEPWIKI_AUTH_MODE` is `true` or `1`. |
 
 **API Key Requirements:**
-- If using `DEEPWIKI_EMBEDDER_TYPE=openai` (default): `OPENAI_API_KEY` is required
+- If using `DEEPWIKI_EMBEDDER_TYPE=openai` (default): `LLM_PROXY_TOKEN` is required
 - If using `DEEPWIKI_EMBEDDER_TYPE=google`: `GOOGLE_API_KEY` is required  
 - If using `DEEPWIKI_EMBEDDER_TYPE=ollama`: No API key required (local processing)
 - If using `DEEPWIKI_EMBEDDER_TYPE=bedrock`: AWS credentials (or role-based credentials) are required
@@ -460,7 +460,7 @@ docker pull ghcr.io/asyncfuncai/deepwiki-open:latest
 # Run the container with environment variables
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   -e OLLAMA_HOST=your_ollama_host \
   -e AZURE_OPENAI_API_KEY=your_azure_openai_api_key \
@@ -494,7 +494,7 @@ You can also mount a .env file to the container:
 ```bash
 # Create a .env file with your API keys
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 echo "AZURE_OPENAI_API_KEY=your_azure_openai_api_key" >> .env
 echo "AZURE_OPENAI_ENDPOINT=your_azure_openai_endpoint" >> .env
@@ -530,7 +530,7 @@ docker build -t deepwiki-open .
 # Run the container
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   -e AZURE_OPENAI_API_KEY=your_azure_openai_api_key \
   -e AZURE_OPENAI_ENDPOINT=your_azure_openai_endpoint \

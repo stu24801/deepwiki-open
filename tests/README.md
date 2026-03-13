@@ -55,7 +55,7 @@ python tests/api/test_api.py
 
 ### Environment Variables
 - `GOOGLE_API_KEY`: Required for Google AI embedder tests
-- `OPENAI_API_KEY`: Required for some integration tests
+- `LLM_PROXY_TOKEN`: Required for some integration tests
 - `DEEPWIKI_EMBEDDER_TYPE`: Set to 'google' for Google embedder tests
 
 ### Dependencies
@@ -113,7 +113,7 @@ Make sure you have a `.env` file in the project root with the required API keys:
 
 ```
 GOOGLE_API_KEY=your_google_api_key_here
-OPENAI_API_KEY=your_openai_api_key_here
+LLM_PROXY_TOKEN=your_openai_api_key_here
 DEEPWIKI_EMBEDDER_TYPE=google
 ```
 

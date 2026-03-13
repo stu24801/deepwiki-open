@@ -38,7 +38,7 @@ cd deepwiki-open
 
 # APIキーを含む.envファイルを作成
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 # オプション: OpenRouterモデルを使用する場合はOpenRouter APIキーを追加
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 
@@ -67,7 +67,7 @@ docker-compose up
 
 ```
 GOOGLE_API_KEY=your_google_api_key
-OPENAI_API_KEY=your_openai_api_key
+LLM_PROXY_TOKEN=your_openai_api_key
 # オプション: OpenRouterモデルを使用する場合は追加
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
@@ -180,7 +180,7 @@ deepwiki/
 | 変数                          | 説明                                                            | 必須 | 注意                                                                                                          |
 | ----------------------------- | --------------------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------------- |
 | `GOOGLE_API_KEY`              | AI 生成のための Google Gemini API キー                          | ◯    |                                                                                                               |
-| `OPENAI_API_KEY`              | 埋め込みのための OpenAI API キー                                | ◯    |                                                                                                               |
+| `LLM_PROXY_TOKEN`              | 埋め込みのための OpenAI API キー                                | ◯    |                                                                                                               |
 | `OPENROUTER_API_KEY`          | 代替モデルのための OpenRouter API キー                          | ✗    | OpenRouter モデルを使用する場合にのみ必須です                                                                 |
 | `PORT`                        | API サーバーのポート（デフォルト：8001）                        | ✗    | API とフロントエンドを同じマシンでホストする場合、`NEXT_PUBLIC_SERVER_BASE_URL`のポートを適宜変更してください |
 | `SERVER_BASE_URL`             | API サーバーのベース URL（デフォルト：`http://localhost:8001`） | ✗    |                                                                                                               |
@@ -216,7 +216,7 @@ docker pull ghcr.io/asyncfuncai/deepwiki-open:latest
 # 環境変数を設定してコンテナを実行
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   -v ~/.adalflow:/root/.adalflow \
   ghcr.io/asyncfuncai/deepwiki-open:latest
@@ -245,7 +245,7 @@ docker-compose up
 ```bash
 # APIキーを含む.envファイルを作成
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 
 # .envファイルをマウントしてコンテナを実行
@@ -278,7 +278,7 @@ docker build -t deepwiki-open .
 # コンテナを実行
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   deepwiki-open
 ```
@@ -311,7 +311,7 @@ DeepWikiでは、複数のLLMプロバイダーをサポートする柔軟なプ
 ```
 # API鍵
 GOOGLE_API_KEY=あなたのGoogle API鍵        # Google Geminiモデルに必要
-OPENAI_API_KEY=あなたのOpenAI鍵            # OpenAIモデルに必要
+LLM_PROXY_TOKEN=あなたのOpenAI鍵            # OpenAIモデルに必要
 OPENROUTER_API_KEY=あなたのOpenRouter鍵    # OpenRouterモデルに必要
 
 # OpenAI APIベースURL設定

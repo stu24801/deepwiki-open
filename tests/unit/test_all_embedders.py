@@ -229,8 +229,8 @@ class TestEmbedderClients:
 
     def test_openai_embedder_via_adalflow(self):
         """Test OpenAI embedder through AdalFlow."""
-        if not os.getenv('OPENAI_API_KEY'):
-            logger.warning("Skipping OpenAI embedder test - OPENAI_API_KEY not available")
+        if not os.getenv('LLM_PROXY_TOKEN'):
+            logger.warning("Skipping OpenAI embedder test - LLM_PROXY_TOKEN not available")
             return
             
         import adalflow as adal

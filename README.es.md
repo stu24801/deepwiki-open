@@ -38,7 +38,7 @@ cd deepwiki-open
 
 # Crear un archivo .env con tus claves API
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 # Opcional: Añadir clave API de OpenRouter si quieres usar modelos de OpenRouter
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 
@@ -65,7 +65,7 @@ Crea un archivo `.env` en la raíz del proyecto con estas claves:
 
 ```
 GOOGLE_API_KEY=your_google_api_key
-OPENAI_API_KEY=your_openai_api_key
+LLM_PROXY_TOKEN=your_openai_api_key
 # Opcional: Añade esto si quieres usar modelos de OpenRouter
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
@@ -189,7 +189,7 @@ Cada proveedor requiere sus correspondientes variables de entorno para las clave
 ```
 # Claves API
 GOOGLE_API_KEY=tu_clave_api_google        # Requerida para modelos Google Gemini
-OPENAI_API_KEY=tu_clave_api_openai        # Requerida para modelos OpenAI
+LLM_PROXY_TOKEN=tu_clave_api_openai        # Requerida para modelos OpenAI
 OPENROUTER_API_KEY=tu_clave_api_openrouter # Requerida para modelos OpenRouter
 
 # Configuración de URL Base de OpenAI API
@@ -246,7 +246,7 @@ Si deseas usar modelos de embedding compatibles con la API de OpenAI (como Aliba
 1. Sustituye el contenido de `api/config/embedder.json` por el de `api/config/embedder_openai_compatible.json`.
 2. En el archivo `.env` de la raíz del proyecto, configura las variables de entorno necesarias, por ejemplo:
    ```
-   OPENAI_API_KEY=tu_api_key
+   LLM_PROXY_TOKEN=tu_api_key
    OPENAI_BASE_URL=tu_endpoint_compatible_openai
    ```
 3. El programa sustituirá automáticamente los placeholders de embedder.json por los valores de tus variables de entorno.

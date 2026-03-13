@@ -942,9 +942,9 @@ IMPORTANT:
         }
       }
 
-      if(responseText.includes('Error preparing retriever: Environment variable OPENAI_API_KEY must be set')) {
+      if(responseText.includes('Error preparing retriever: Environment variable LLM_PROXY_TOKEN must be set')) {
          setEmbeddingError(true);
-         throw new Error('OPENAI_API_KEY environment variable is not set. Please configure your OpenAI API key.');
+         throw new Error('LLM_PROXY_TOKEN environment variable is not set. Please configure your OpenAI API key.');
        }
 
        if(responseText.includes('Ollama model') && responseText.includes('not found')) {

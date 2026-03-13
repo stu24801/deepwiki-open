@@ -38,7 +38,7 @@ cd deepwiki-open
 
 # Tạo .env file với API keys
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 # Optional: Thêm OpenRouter API key nếu bạn muốn OpenRouter models
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 
@@ -58,7 +58,7 @@ Tạo  `.env` file trong thư mục gốc của project với những keys vừa
 
 ```
 GOOGLE_API_KEY=your_google_api_key
-OPENAI_API_KEY=your_openai_api_key
+LLM_PROXY_TOKEN=your_openai_api_key
 # Optional: Thêm OpenRouter API key nếu bạn muốn OpenRouter models
 OPENROUTER_API_KEY=your_openrouter_api_key
 ```
@@ -171,7 +171,7 @@ deepwiki/
 | Biến môi trường | Mô tả | bắt buộc | ghi chú |
 |----------|-------------|----------|------|
 | `GOOGLE_API_KEY` | Google Gemini API key  | Có |
-| `OPENAI_API_KEY` | OpenAI API key   | có |
+| `LLM_PROXY_TOKEN` | OpenAI API key   | có |
 | `OPENROUTER_API_KEY` | OpenRouter API key   | không| Yêu cầu nếu bạn muốn dùng OpenRouter models |
 | `PORT` | Port của API server (mặc định: 8001) | không | Nếu bạn muốn chạy API và frontend trên cùng 1 máy, hãy điều chỉnh Port `SERVER_BASE_URL` |
 | `SERVER_BASE_URL` | Đường dẫnn mặt định của API server (mặc định: http://localhost:8001) | không |
@@ -187,7 +187,7 @@ docker pull ghcr.io/asyncfuncai/deepwiki-open:latest
 # Chạy container với biến môi trường
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   -v ~/.adalflow:/root/.adalflow \
   ghcr.io/asyncfuncai/deepwiki-open:latest
@@ -207,7 +207,7 @@ Bạn có thể "mount"  .env file vào container:
 ```bash
 # Tạo .env file với your API keys
 echo "GOOGLE_API_KEY=your_google_api_key" > .env
-echo "OPENAI_API_KEY=your_openai_api_key" >> .env
+echo "LLM_PROXY_TOKEN=your_openai_api_key" >> .env
 echo "OPENROUTER_API_KEY=your_openrouter_api_key" >> .env
 
 # Run container với .env file
@@ -231,7 +231,7 @@ docker build -t deepwiki-open .
 # Chạy container
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=your_google_api_key \
-  -e OPENAI_API_KEY=your_openai_api_key \
+  -e LLM_PROXY_TOKEN=your_openai_api_key \
   -e OPENROUTER_API_KEY=your_openrouter_api_key \
   deepwiki-open
 ```
@@ -263,7 +263,7 @@ Mỗi nhà cung cấp yêu cầu các biến môi trường API key tương ứn
 ```
 # API Keys
 GOOGLE_API_KEY=google_api_key_của_bạn        # Bắt buộc cho các mô hình Google Gemini
-OPENAI_API_KEY=openai_key_của_bạn            # Bắt buộc cho các mô hình OpenAI
+LLM_PROXY_TOKEN=openai_key_của_bạn            # Bắt buộc cho các mô hình OpenAI
 OPENROUTER_API_KEY=openrouter_key_của_bạn    # Bắt buộc cho các mô hình OpenRouter
 
 # Cấu hình URL cơ sở cho OpenAI API

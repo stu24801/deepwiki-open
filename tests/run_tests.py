@@ -97,7 +97,7 @@ def check_environment():
     # Check for API keys
     api_keys = {
         "GOOGLE_API_KEY": "Google AI embedder tests",
-        "OPENAI_API_KEY": "OpenAI integration tests"
+        "LLM_PROXY_TOKEN": "OpenAI integration tests"
     }
     
     for key, purpose in api_keys.items():

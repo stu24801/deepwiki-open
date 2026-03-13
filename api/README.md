@@ -26,7 +26,7 @@ Create a `.env` file in the project root:
 ```
 # Required API Keys
 GOOGLE_API_KEY=your_google_api_key        # Required for Google Gemini models
-OPENAI_API_KEY=your_openai_api_key        # Required for embeddings and OpenAI models
+LLM_PROXY_TOKEN=your_openai_api_key        # Required for embeddings and OpenAI models
 
 # Optional API Keys
 OPENROUTER_API_KEY=your_openrouter_api_key  # Required only if using OpenRouter models
@@ -61,7 +61,7 @@ If you're not using Ollama mode, you need to configure an OpenAI API key for emb
 DeepWiki supports multiple LLM providers. The environment variables above are required depending on which providers you want to use:
 
 - **Google Gemini**: Requires `GOOGLE_API_KEY`
-- **OpenAI**: Requires `OPENAI_API_KEY`
+- **OpenAI**: Requires `LLM_PROXY_TOKEN`
 - **OpenRouter**: Requires `OPENROUTER_API_KEY`
 - **AWS Bedrock**: Requires `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
 - **Ollama**: No API key required (runs locally)

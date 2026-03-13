@@ -13,7 +13,7 @@ from api.config import (
     get_model_config,
     configs,
     OPENROUTER_API_KEY,
-    OPENAI_API_KEY,
+    LLM_PROXY_TOKEN,
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
     WIKI_AUTH_MODE,
@@ -496,8 +496,8 @@ This file contains...
             logger.info(f"Using Openai protocol with model: {request.model}")
 
             # Check if an API key is set for Openai
-            if not OPENAI_API_KEY:
-                logger.warning("OPENAI_API_KEY not configured, but continuing with request")
+            if not LLM_PROXY_TOKEN:
+                logger.warning("LLM_PROXY_TOKEN not configured, but continuing with request")
                 # We'll let the OpenAIClient handle this and return an error message
 
             # Initialize Openai client
@@ -647,7 +647,7 @@ This file contains...
                     await websocket.close()
                 except Exception as e_openai:
                     logger.error(f"Error with Openai API: {str(e_openai)}")
-                    error_msg = f"\nError with Openai API: {str(e_openai)}\n\nPlease check that you have set the OPENAI_API_KEY environment variable with a valid API key."
+                    error_msg = f"\nError with Openai API: {str(e_openai)}\n\nPlease check that you have set the LLM_PROXY_TOKEN environment variable with a valid API key."
                     await websocket.send_text(error_msg)
                     # Close the WebSocket connection after sending the error message
                     await websocket.close()
@@ -802,7 +802,7 @@ This file contains...
                                 await websocket.send_text(text)
                         except Exception as e_fallback:
                             logger.error(f"Error with Openai API fallback: {str(e_fallback)}")
-                            error_msg = f"\nError with Openai API fallback: {str(e_fallback)}\n\nPlease check that you have set the OPENAI_API_KEY environment variable with a valid API key."
+                            error_msg = f"\nError with Openai API fallback: {str(e_fallback)}\n\nPlease check that you have set the LLM_PROXY_TOKEN environment variable with a valid API key."
                             await websocket.send_text(error_msg)
                     elif request.provider == "bedrock":
                         try:

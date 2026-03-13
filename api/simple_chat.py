@@ -11,7 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
-from api.config import get_model_config, configs, OPENROUTER_API_KEY, OPENAI_API_KEY, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+from api.config import get_model_config, configs, OPENROUTER_API_KEY, LLM_PROXY_TOKEN, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 from api.data_pipeline import count_tokens, get_file_content
 from api.openai_client import OpenAIClient
 from api.openrouter_client import OpenRouterClient
@@ -375,8 +375,8 @@ async def chat_completions_stream(request: ChatCompletionRequest):
             logger.info(f"Using Openai protocol with model: {request.model}")
 
             # Check if an API key is set for Openai
-            if not OPENAI_API_KEY:
-                logger.warning("OPENAI_API_KEY not configured, but continuing with request")
+            if not LLM_PROXY_TOKEN:
+                logger.warning("LLM_PROXY_TOKEN not configured, but continuing with request")
                 # We'll let the OpenAIClient handle this and return an error message
 
             # Initialize Openai client
@@ -499,7 +499,7 @@ async def chat_completions_stream(request: ChatCompletionRequest):
                                         yield text
                     except Exception as e_openai:
                         logger.error(f"Error with Openai API: {str(e_openai)}")
-                        yield f"\nError with Openai API: {str(e_openai)}\n\nPlease check that you have set the OPENAI_API_KEY environment variable with a valid API key."
+                        yield f"\nError with Openai API: {str(e_openai)}\n\nPlease check that you have set the LLM_PROXY_TOKEN environment variable with a valid API key."
                 elif request.provider == "bedrock":
                     try:
                         # Get the response and handle it properly using the previously created api_kwargs
@@ -634,7 +634,7 @@ async def chat_completions_stream(request: ChatCompletionRequest):
                                     yield text
                             except Exception as e_fallback:
                                 logger.error(f"Error with Openai API fallback: {str(e_fallback)}")
-                                yield f"\nError with Openai API fallback: {str(e_fallback)}\n\nPlease check that you have set the OPENAI_API_KEY environment variable with a valid API key."
+                                yield f"\nError with Openai API fallback: {str(e_fallback)}\n\nPlease check that you have set the LLM_PROXY_TOKEN environment variable with a valid API key."
                         elif request.provider == "bedrock":
                             try:
                                 # Create new api_kwargs with the simplified prompt

@@ -148,7 +148,7 @@ class OpenAIClient(ModelClient):
             The default parser is `get_first_message_content`.
         base_url (str): The API base URL to use when initializing the client.
             Defaults to `"https://api.openai.com"`, but can be customized for third-party API providers or self-hosted models.
-        env_api_key_name (str): The environment variable name for the API key. Defaults to `"OPENAI_API_KEY"`.
+        env_api_key_name (str): The environment variable name for the API key. Defaults to `"LLM_PROXY_TOKEN"`.
 
     References:
         - OpenAI API Overview: https://platform.openai.com/docs/introduction
@@ -165,14 +165,14 @@ class OpenAIClient(ModelClient):
         input_type: Literal["text", "messages"] = "text",
         base_url: Optional[str] = None,
         env_base_url_name: str = "OPENAI_BASE_URL",
-        env_api_key_name: str = "OPENAI_API_KEY",
+        env_api_key_name: str = "LLM_PROXY_TOKEN",
     ):
-        r"""It is recommended to set the OPENAI_API_KEY environment variable instead of passing it as an argument.
+        r"""It is recommended to set the LLM_PROXY_TOKEN environment variable instead of passing it as an argument.
 
         Args:
             api_key (Optional[str], optional): OpenAI API key. Defaults to None.
             base_url (str): The API base URL to use when initializing the client.
-            env_api_key_name (str): The environment variable name for the API key. Defaults to `"OPENAI_API_KEY"`.
+            env_api_key_name (str): The environment variable name for the API key. Defaults to `"LLM_PROXY_TOKEN"`.
         """
         super().__init__()
         self._api_key = api_key

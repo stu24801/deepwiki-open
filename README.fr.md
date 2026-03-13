@@ -39,7 +39,7 @@ cd deepwiki-open
 
 # Créer un fichier .env avec vos clés API
 echo "GOOGLE_API_KEY=votre_clé_google" > .env
-echo "OPENAI_API_KEY=votre_clé_openai" >> .env
+echo "LLM_PROXY_TOKEN=votre_clé_openai" >> .env
 # Facultatif : clé OpenRouter
 echo "OPENROUTER_API_KEY=votre_clé_openrouter" >> .env
 # Facultatif : hôte personnalisé Ollama
@@ -67,7 +67,7 @@ Pour des instructions détaillées sur l’utilisation de DeepWiki avec Ollama e
 Créez un fichier `.env` à la racine du projet avec ces clés :
 ```
 GOOGLE_API_KEY=votre_clé_google
-OPENAI_API_KEY=votre_clé_openai
+LLM_PROXY_TOKEN=votre_clé_openai
 # Optionnel : Ajoutez ceci pour utiliser des modèles OpenRouter
 OPENROUTER_API_KEY=votre_clé_openrouter
 # Optionnel : Ajoutez ceci pour utiliser des modèles Azure OpenAI
@@ -200,7 +200,7 @@ Chaque fournisseur requiert les variables d'environnement de clé API correspond
 ```
 # API Keys
 GOOGLE_API_KEY=votre_clé_google        # Requis pour les modèles Google Gemini
-OPENAI_API_KEY=votre_clé_openai        # Requis pour les modèles OpenAI
+LLM_PROXY_TOKEN=votre_clé_openai        # Requis pour les modèles OpenAI
 OPENROUTER_API_KEY=votre_clé_openrouter # Requis pour les modèles OpenRouter
 AZURE_OPENAI_API_KEY=votre_clé_azure_openai  #Requis pour les modèles Azure OpenAI
 AZURE_OPENAI_ENDPOINT=votre_endpoint_azure_openai  #Requis pour les modèles Azure OpenAI
@@ -263,7 +263,7 @@ Si vous souhaitez utiliser des modèles d'embedding compatibles avec l'API OpenA
 1. Remplacez le contenu de `api/config/embedder.json` par celui de `api/config/embedder_openai_compatible.json`.
 2. Dans votre fichier `.env` à la racine du projet, définissez les variables d'environnement appropriées, par exemple :
    ```
-   OPENAI_API_KEY=votre_clé_api
+   LLM_PROXY_TOKEN=votre_clé_api
    OPENAI_BASE_URL=votre_endpoint_compatible_openai
    ```
 3. Le programme substituera automatiquement les espaces réservés dans `embedder.json` avec les valeurs de vos variables d'environnement.
@@ -313,7 +313,7 @@ docker-compose up
 | Variable                | Description                                                     | Requis     | Note                                                                                                     |
 |-------------------------|-----------------------------------------------------------------|------------|----------------------------------------------------------------------------------------------------------|
 | `GOOGLE_API_KEY`        | Clé API Google Gemini pour la génération                        | Non        | Requis uniquement si vous souhaitez utiliser les modèles Google Gemini                                   |
-| `OPENAI_API_KEY`        | Clé API OpenAI pour les embeddings et la génération              | Oui        | Remarque : Ceci est requis même si vous n'utilisez pas les modèles OpenAI, car elle est utilisée pour les embeddings. |
+| `LLM_PROXY_TOKEN`        | Clé API OpenAI pour les embeddings et la génération              | Oui        | Remarque : Ceci est requis même si vous n'utilisez pas les modèles OpenAI, car elle est utilisée pour les embeddings. |
 | `OPENROUTER_API_KEY`    | Clé API OpenRouter pour les modèles alternatifs                 | Non        | Requis uniquement si vous souhaitez utiliser les modèles OpenRouter                                      |
 | `AZURE_OPENAI_API_KEY`  | Clé API Azure OpenAI                                            | Non        | Requis uniquement si vous souhaitez utiliser les modèles Azure OpenAI                                    |
 | `AZURE_OPENAI_ENDPOINT` | Point de terminaison Azure OpenAI                               | Non        | Requis uniquement si vous souhaitez utiliser les modèles Azure OpenAI                                    |
@@ -351,7 +351,7 @@ docker pull ghcr.io/asyncfuncai/deepwiki-open:latest
 # Exécuter le conteneur avec les variables d'environnement
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=votre_clé_google \
-  -e OPENAI_API_KEY=votre_clé_openai \
+  -e LLM_PROXY_TOKEN=votre_clé_openai \
   -e OPENROUTER_API_KEY=votre_clé_openrouter \
   -e OLLAMA_HOST=votre_hôte_ollama \
   -e AZURE_OPENAI_API_KEY=votre_clé_azure_openai \
@@ -385,7 +385,7 @@ Vous pouvez également monter un fichier `.env` dans le conteneur :
 ```bash
 # Créer un fichier .env avec vos clés API
 echo "GOOGLE_API_KEY=votre_clé_google" > .env
-echo "OPENAI_API_KEY=votre_clé_openai" >> .env
+echo "LLM_PROXY_TOKEN=votre_clé_openai" >> .env
 echo "OPENROUTER_API_KEY=votre_clé_openrouter" >> .env
 echo "AZURE_OPENAI_API_KEY=votre_clé_azure_openai" >> .env
 echo "AZURE_OPENAI_ENDPOINT=votre_endpoint_azure_openai" >> .env
@@ -421,7 +421,7 @@ docker build -t deepwiki-open .
 # Run the container
 docker run -p 8001:8001 -p 3000:3000 \
   -e GOOGLE_API_KEY=votre_clé_google \
-  -e OPENAI_API_KEY=votre_clé_openai \
+  -e LLM_PROXY_TOKEN=votre_clé_openai \
   -e OPENROUTER_API_KEY=votre_clé_openrouter \
   -e AZURE_OPENAI_API_KEY=votre_clé_azure_openai \
   -e AZURE_OPENAI_ENDPOINT=votre_endpoint_azure_openai \
