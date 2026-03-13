@@ -40,6 +40,7 @@ interface AskProps {
   isCustomModel?: boolean;
   customModel?: string;
   language?: string;
+  authCode?: string;
   onRef?: (ref: { clearConversation: () => void }) => void;
 }
 
@@ -50,6 +51,7 @@ const Ask: React.FC<AskProps> = ({
   isCustomModel = false,
   customModel = '',
   language = 'en',
+  authCode = '',
   onRef
 }) => {
   const [question, setQuestion] = useState('');
@@ -328,6 +330,11 @@ const Ask: React.FC<AskProps> = ({
         requestBody.token = repoInfo.token;
       }
 
+      // Add auth code if available
+      if (authCode) {
+        requestBody.authorization_code = authCode;
+      }
+
       // Close any existing WebSocket connection
       closeWebSocket(webSocketRef.current);
 
@@ -568,6 +575,11 @@ const Ask: React.FC<AskProps> = ({
       // Add tokens if available
       if (repoInfo?.token) {
         requestBody.token = repoInfo.token;
+      }
+
+      // Add auth code if available
+      if (authCode) {
+        requestBody.authorization_code = authCode;
       }
 
       // Close any existing WebSocket connection

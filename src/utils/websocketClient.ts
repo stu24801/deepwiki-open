@@ -33,6 +33,7 @@ export interface ChatCompletionRequest {
   language?: string;
   excluded_dirs?: string;
   excluded_files?: string;
+  authorization_code?: string;
 }
 
 /**

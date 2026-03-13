@@ -2249,6 +2249,7 @@ IMPORTANT:
               isCustomModel={isCustomSelectedModelState}
               customModel={customSelectedModelState}
               language={language}
+              authCode={authCode}
               onRef={(ref) => (askComponentRef.current = ref)}
             />
           </div>
