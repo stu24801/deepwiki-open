@@ -270,7 +270,7 @@ def load_lang_config():
             "fr": "Français (French)",
             "ru": "Русский (Russian)"
         },
-        "default": "en"
+        "default": "zh-tw"
     }
 
     loaded_config = load_json_config("lang.json") # Let load_json_config handle path and loading

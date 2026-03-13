@@ -15,54 +15,53 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  // Initialize with 'en' or get from localStorage if available
-  const [language, setLanguageState] = useState<string>('en');
+  // Initialize with 'zh-tw' or get from localStorage if available
+  const [language, setLanguageState] = useState<string>('zh-tw');
   const [messages, setMessages] = useState<Messages>({});
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [supportedLanguages, setSupportedLanguages] = useState({})
-  const [defaultLanguage, setDefaultLanguage] = useState('en')
+  const [defaultLanguage, setDefaultLanguage] = useState('zh-tw')
 
   // Helper function to detect browser language
   const detectBrowserLanguage = (): string => {
     try {
       if (typeof window === 'undefined' || typeof navigator === 'undefined') {
-        return 'en'; // Default to English on server-side
+        return 'zh-tw'; // Default to Traditional Chinese on server-side
       }
 
       // Get browser language (navigator.language returns full locale like 'en-US')
       const browserLang = navigator.language || (navigator as any).userLanguage || '';
-      console.log('Detected browser language:', browserLang);
 
       if (!browserLang) {
-        return 'en'; // Default to English if browser language is not available
+        return 'zh-tw';
       }
 
-      // Extract the language code (first 2 characters)
       const langCode = browserLang.split('-')[0].toLowerCase();
-      console.log('Extracted language code:', langCode);
+      const regionCode = browserLang.split('-')[1]?.toUpperCase() || '';
 
-      // Check if the detected language is supported
+      // Special case for Chinese variants — check BEFORE generic locales lookup
+      if (langCode === 'zh') {
+        if (regionCode === 'TW' || regionCode === 'HK' || regionCode === 'MO') {
+          return 'zh-tw'; // Traditional Chinese
+        }
+        return 'zh'; // Simplified Chinese
+      }
+
+      // Check if the full locale (e.g. 'zh-tw') is supported
+      const fullLocale = `${langCode}-${regionCode.toLowerCase()}`;
+      if (locales.includes(fullLocale as any)) {
+        return fullLocale;
+      }
+
+      // Check if the short code is supported
       if (locales.includes(langCode as any)) {
-        console.log('Language supported, using:', langCode);
         return langCode;
       }
 
-      // Special case for Chinese variants
-      if (langCode === 'zh') {
-        console.log('Chinese language detected');
-        // Check for traditional Chinese variants
-        if (browserLang.includes('TW') || browserLang.includes('HK')) {
-          console.log('Traditional Chinese variant detected');
-          return 'zh'; // Use Mandarin for traditional Chinese
-        }
-        return 'zh'; // Use Mandarin for simplified Chinese
-      }
-
-      console.log('Language not supported, defaulting to English');
-      return 'en'; // Default to English if not supported
+      return 'zh-tw'; // Default to Traditional Chinese
     } catch (error) {
       console.error('Error detecting browser language:', error);
-      return 'en'; // Default to English on error
+      return 'zh-tw';
     }
   };
 
