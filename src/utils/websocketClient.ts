@@ -6,11 +6,14 @@
 // Get the server base URL from environment or use default
 const SERVER_BASE_URL = process.env.SERVER_BASE_URL || 'http://localhost:8001';
 
-// Convert HTTP URL to WebSocket URL
+// Convert HTTP URL to WebSocket URL using browser's current location
 const getWebSocketUrl = () => {
-  const baseUrl = SERVER_BASE_URL;
-  // Replace http:// with ws:// or https:// with wss://
-  const wsBaseUrl = baseUrl.replace(/^http/, 'ws');
+  if (typeof window !== 'undefined') {
+    const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    return `${wsProtocol}//${window.location.host}/ws/chat`;
+  }
+  // SSR fallback (should not be reached for WebSocket calls)
+  const wsBaseUrl = SERVER_BASE_URL.replace(/^http/, 'ws');
   return `${wsBaseUrl}/ws/chat`;
 };
 
