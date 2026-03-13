@@ -282,13 +282,7 @@ export default function RepoWikiPage() {
 
   // Authentication state
   const [authRequired, setAuthRequired] = useState<boolean>(false);
-  // Init authCode from URL param first (passed from home page), fallback to localStorage
-  const [authCode, setAuthCode] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return new URLSearchParams(window.location.search).get('auth_code') || localStorage.getItem('deepwiki_auth_code') || '';
-    }
-    return '';
-  });
+  const [authCode, setAuthCode] = useState<string>('');
   const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
 
   // Default branch state
@@ -1705,6 +1699,9 @@ IMPORTANT:
 
   // Start wiki generation when component mounts
   useEffect(() => {
+    // Wait for auth check to complete before starting wiki generation
+    if (isAuthLoading) return;
+
     if (effectRan.current === false) {
       effectRan.current = true; // Set to true immediately to prevent re-entry due to StrictMode
 
@@ -1890,7 +1887,7 @@ IMPORTANT:
 
     // Clean up function for this effect is not strictly necessary for loadData,
     // but keeping the main unmount cleanup in the other useEffect
-  }, [effectiveRepoInfo, effectiveRepoInfo.owner, effectiveRepoInfo.repo, effectiveRepoInfo.type, language, fetchRepositoryStructure, messages.loading?.fetchingCache, isComprehensiveView]);
+  }, [effectiveRepoInfo, effectiveRepoInfo.owner, effectiveRepoInfo.repo, effectiveRepoInfo.type, language, fetchRepositoryStructure, messages.loading?.fetchingCache, isComprehensiveView, isAuthLoading]);
 
   // Save wiki to server-side cache when generation is complete
   useEffect(() => {
